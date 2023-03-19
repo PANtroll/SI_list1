@@ -2,8 +2,11 @@ import com.opencsv.CSVReader;
 
 import java.io.FileReader;
 import java.io.IOException;
+import java.sql.Date;
 import java.text.DateFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -15,24 +18,24 @@ public class ReadData {
         List<Edge> result = new ArrayList<>();
 
         try (CSVReader reader = new CSVReader(new FileReader(path))) {
-            String[] nextRecord = null;
+            String[] nextRecord;
+            reader.readNext();
             while ((nextRecord = reader.readNext()) != null) {
                 Edge edge = new Edge();
-                edge.setStartStop(nextRecord[0]);
-                edge.setEndStop(nextRecord[1]);
-                Calendar cal = Calendar.getInstance();
-                cal.setTime(DateFormat.getInstance().parse(nextRecord[2]));
-                edge.setStartTime(cal);
-                cal.clear();
-                cal.setTime(DateFormat.getInstance().parse(nextRecord[2]));
-                edge.setStartTime(cal);
-
+                edge.setCompany(nextRecord[2]);
+                edge.setLine(nextRecord[3]);
+                edge.setStartStop(nextRecord[6]);
+                edge.setEndStop(nextRecord[7]);
+                DateFormat df = new SimpleDateFormat("HH:mm:ss");
+                edge.setDepartureTime(df.parse(nextRecord[4]));
+                edge.setArrivalTime(df.parse(nextRecord[5]));
+                edge.calculateDuration();
                 result.add(edge);
             }
         } catch (IOException e) {
-            System.err.println(e.getStackTrace());
+            System.err.println(e);
         } catch (ParseException e) {
-            System.out.println(e.getStackTrace());
+            System.err.println(e);
         }
         return result;
     }
