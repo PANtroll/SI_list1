@@ -24,8 +24,8 @@ public class ReadData {
                 Edge edge = new Edge();
                 edge.setCompany(nextRecord[2]);
                 edge.setLine(nextRecord[3]);
-                edge.setStartStop(nextRecord[6]);
-                edge.setEndStop(nextRecord[7]);
+                edge.setStartStop(new Stop(nextRecord[6]));
+                edge.setEndStop(new Stop(nextRecord[7]));
                 DateFormat df = new SimpleDateFormat("HH:mm:ss");
                 edge.setDepartureTime(df.parse(nextRecord[4]));
                 edge.setArrivalTime(df.parse(nextRecord[5]));

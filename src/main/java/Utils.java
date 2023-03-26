@@ -8,8 +8,8 @@ public class Utils {
     private Utils() {
     }
 
-    public static List<String> getDistinctStops(List<Edge> list){
-        List<String> result = new ArrayList<>();
+    public static List<Stop> getDistinctStops(List<Edge> list){
+        List<Stop> result = new ArrayList<>();
 
         for(Edge edge : list){
             if(!result.contains(edge.getStartStop())){
@@ -20,6 +20,13 @@ public class Utils {
             }
         }
         return result;
+    }
+
+    public static Stop getStopByName(String name, List<Stop> stops){
+        String nameUC = name.toUpperCase();
+        List<Stop> result = stops.stream().filter(stop -> stop.getName().equals(nameUC)).toList();
+        return result.isEmpty() ? null : result.get(0);
+
     }
 
 

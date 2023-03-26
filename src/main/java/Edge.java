@@ -5,8 +5,8 @@ public class Edge {
 
     private String company;
     private String line;
-    private String startStop;
-    private String endStop;
+    private Stop startStop;
+    private Stop endStop;
 
     private Date departureTime;
     private Date arrivalTime;
@@ -32,20 +32,24 @@ public class Edge {
         this.line = line;
     }
 
-    public String getStartStop() {
+    public Stop getStartStop() {
         return startStop;
     }
 
-    public void setStartStop(String startStop) {
-        this.startStop = startStop.toUpperCase();
+    public void setStartStop(Stop startStop) {
+        this.startStop = startStop;
     }
 
-    public String getEndStop() {
+    public Stop getEndStop() {
         return endStop;
     }
 
-    public void setEndStop(String endStop) {
-        this.endStop = endStop.toUpperCase();
+    public void setEndStop(Stop endStop) {
+        this.endStop = endStop;
+    }
+
+    public void setDuration(long duration) {
+        this.duration = duration;
     }
 
     public Date getDepartureTime() {
