@@ -10,8 +10,8 @@ public class Main {
 
     public static void main(String[] args) throws ParseException {
 
-//        String pathToFile = "src/main/resources/connection_graph.csv";
-        String pathToFile = "src/main/resources/testData.csv";
+        String pathToFile = "src/main/resources/connection_graph.csv";
+//        String pathToFile = "src/main/resources/testData.csv";
 
         ReadData reader = new ReadData();
         List<Edge> listOfConnections = reader.readFile(pathToFile);
@@ -22,7 +22,7 @@ public class Main {
 
 //        List<Object> parameters = app.startApp();
         DateFormat df = new SimpleDateFormat("HH:mm:ss");
-        List<Object> parameters = List.of("PL. JANA PAWŁA II", "pl. Strzegomski (Muzeum Współczesne)", df.parse("3:50:00"), "t");
+        List<Object> parameters = List.of("Rynek", "pl. Strzegomski (Muzeum Współczesne)", df.parse("6:50:00"), "t");
 
         System.out.println("Najlepsza scieżka:");
         System.out.println(app.app(Utils.getStopByName(parameters.get(0).toString(), listOfStops),
