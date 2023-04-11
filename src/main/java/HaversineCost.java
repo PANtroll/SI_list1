@@ -1,6 +1,13 @@
 import java.util.Comparator;
 
 public class HaversineCost implements Comparator<Stop> {
+    private Stop start;
+    private Stop end;
+    public HaversineCost(Stop start, Stop end) {
+        this.start = start;
+        this.end = end;
+
+    }
 
     public double computeCost(Stop from, Stop to) {
         double R = 6372.8;
@@ -18,10 +25,12 @@ public class HaversineCost implements Comparator<Stop> {
 
     @Override
     public int compare(Stop from, Stop to) {
-        double dLat = Math.toRadians(to.getLatitude() - from.getLatitude());
-        double dLon = Math.toRadians(to.getLongitude() - from.getLongitude());
-        if(dLat == 0 && dLon == 0) return 0;
-        double dLatLon = (dLat - dLon);
+        double dLatSt = Math.toRadians(end.getLatitude() - from.getLatitude());
+        double dLatEn = Math.toRadians(end.getLatitude() - to.getLatitude());
+        double dLonSt = Math.toRadians(end.getLongitude() - from.getLongitude());
+        double dLonEn = Math.toRadians(end.getLongitude() - to.getLongitude());
+        if(dLatSt == 0 && dLatEn == 0 || dLonSt == 0 && dLonEn == 0) return 0;
+        double dLatLon = (dLatSt + dLonSt) - (dLatEn + dLonEn);
         return dLatLon > 0.0 ? -1 : 1;
     }
 }

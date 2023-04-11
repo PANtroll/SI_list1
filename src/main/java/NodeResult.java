@@ -3,12 +3,9 @@ import java.util.Date;
 import java.util.Objects;
 
 public class NodeResult {
-
     private Stop from;
     private Stop to;
-
     private Date time;
-
     private String line;
 
     public NodeResult(Stop from, Stop to, Date time, String line) {

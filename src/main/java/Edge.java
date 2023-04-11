@@ -7,10 +7,8 @@ public class Edge {
     private String line;
     private Stop startStop;
     private Stop endStop;
-
     private Date departureTime;
     private Date arrivalTime;
-
     private long duration;
 
     public void calculateDuration(){
