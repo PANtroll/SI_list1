@@ -22,7 +22,7 @@ public class Main {
 
 //        List<Object> parameters = app.startApp();
         DateFormat df = new SimpleDateFormat("HH:mm:ss");
-        List<Object> parameters = List.of("Rynek", "pl. Strzegomski (Muzeum Współczesne)", df.parse("6:50:00"), "t");
+        List<Object> parameters = List.of("Rynek", "pl. Strzegomski (Muzeum Współczesne)", df.parse("13:50:00"), "t");
 
         System.out.println("Najlepsza scieżka:");
         System.out.println(app.app(Utils.getStopByName(parameters.get(0).toString(), listOfStops),

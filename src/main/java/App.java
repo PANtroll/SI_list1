@@ -35,15 +35,13 @@ public class App {
 
         Map<Stop, Map<Stop, Map<String, List<Date>>>> dataCopy = new HashMap<>(data);
         Map<Stop, NodeResult> parents= new HashMap<>();
-        Map<Stop, Long> costs = new HashMap<>();
         Map<Stop, Boolean> visited = new HashMap<>();
         List<Stop> stopListAll = data.keySet().stream().toList();
         for (int i = 0; i < stopListAll.size(); i++) {
-            costs.put(stopListAll.get(i), Long.MAX_VALUE);
             visited.put(stopListAll.get(i), false);
         }
-        costs.put(start, 0L);
         visited.put(start, true);
+        parents.put(start, new NodeResult(start, start, startTime, null));
         List<Stop> nodes;
         List<Stop> nodesCopy = new ArrayList<>();
         nodesCopy.add(start);
@@ -51,21 +49,27 @@ public class App {
             nodes = new ArrayList<>(nodesCopy);
             nodesCopy.clear();
             for(Stop node: nodes) {
+                if(!parents.containsKey(node)){
+                    continue;
+                }
+                Date dateNow = parents.get(node).getTime();
                 for (Stop neighbour : data.get(node).keySet()) {
                     int min = Integer.MAX_VALUE;
                     String minLine = "";
                     Date minDate = null;
                     for (String line : data.get(node).get(neighbour).keySet()) {
                         for (Date date : data.get(node).get(neighbour).get(line)) {
-                            int distance = calculateTime(date, startTime);
-                            if (distance < min) {
-                                min = distance;
-                                minLine = line;
-                                minDate = date;
+                            if(date.after(dateNow)){// && (!parents.containsKey(neighbour) || parents.get(neighbour).getTime().after(date))) {
+                                int distance = calculateTime(date, dateNow);
+                                if (distance < min) {
+                                    min = distance;
+                                    minLine = line;
+                                    minDate = date;
+                                }
                             }
                         }
                     }
-                    if(!parents.containsKey(neighbour) || parents.get(neighbour).getTime().after(minDate)) {
+                    if(minDate != null && (!parents.containsKey(neighbour) || parents.get(neighbour).getTime().after(minDate))) {
                         NodeResult result = new NodeResult(node, neighbour, minDate, minLine);
                         parents.put(neighbour, result);
                     }
